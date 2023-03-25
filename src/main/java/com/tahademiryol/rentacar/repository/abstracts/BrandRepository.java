@@ -1,13 +1,10 @@
 package com.tahademiryol.rentacar.repository.abstracts;
 
 import com.tahademiryol.rentacar.entities.concretes.Brand;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+//CRUD operations
+public interface BrandRepository extends JpaRepository<Brand, Integer> {
 
-public interface BrandRepository {
-    List<Brand> getAll();
-    Brand getById(int id);
-    Brand add(Brand brand);
-    Brand update(int id, Brand brand);
-    void delete(int id);
+    //custom queries
 }
