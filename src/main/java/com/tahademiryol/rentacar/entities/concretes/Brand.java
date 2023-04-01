@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.List;
 
 // code first
-@Entity
+@Entity // not needed but it's useful for reviewing
 @Setter
 @Getter
 @NoArgsConstructor
