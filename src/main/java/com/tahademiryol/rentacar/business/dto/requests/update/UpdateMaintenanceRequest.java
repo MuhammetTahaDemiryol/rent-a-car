@@ -1,4 +1,4 @@
-package com.tahademiryol.rentacar.business.dto.requests.create;
+package com.tahademiryol.rentacar.business.dto.requests.update;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateModelRequest {
-    private String name;
-    private int brandId;
+public class UpdateMaintenanceRequest {
+    private int carId;
 }

@@ -5,6 +5,7 @@ import com.tahademiryol.rentacar.business.dto.requests.create.CreateBrandRequest
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateBrandRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateBrandResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.GetAllBrandsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.GetAllModelsResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.GetBrandResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateBrandResponse;
 import com.tahademiryol.rentacar.entities.concretes.Brand;
@@ -26,10 +27,7 @@ public class BrandManager implements BrandService {
     public List<GetAllBrandsResponse> getAll() {
         List<Brand> brands = repository.findAll();
 
-        return brands
-                .stream()
-                .map(brand -> mapper.map(brand, GetAllBrandsResponse.class))
-                .toList();
+        return brands.stream().map(brand -> mapper.map(brand, GetAllBrandsResponse.class)).toList();
     }
 
     @Override
@@ -70,6 +68,12 @@ public class BrandManager implements BrandService {
     public void delete(int id) {
         checkIfBrandExists(id);
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<GetAllModelsResponse> showModels(int id) {
+        Brand brand = repository.findById(id).orElseThrow();
+        return brand.getModels().stream().map(model -> mapper.map(model, GetAllModelsResponse.class)).toList();
     }
 
     // Business rules

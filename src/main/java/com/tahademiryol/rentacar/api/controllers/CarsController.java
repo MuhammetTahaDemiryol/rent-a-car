@@ -5,10 +5,9 @@ import com.tahademiryol.rentacar.business.dto.requests.create.CreateCarRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateCarRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateCarResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.GetAllCarsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.GetAllMaintenanceResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.GetCarResponse;
-import com.tahademiryol.rentacar.business.dto.responses.update.UpdateAvailableCarResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateCarResponse;
-import com.tahademiryol.rentacar.business.dto.responses.update.UpdateMaintenanceCarResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ public class CarsController {
 
     @GetMapping("/{id}")
     public GetCarResponse getById(@PathVariable int id) {
-        return service.getById(id);
+        return service.get(id);
     }
 
     @PostMapping
@@ -51,17 +50,10 @@ public class CarsController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         service.delete(id);
-
     }
 
-    @PutMapping("/update-maintenance/{id}")
-    public UpdateMaintenanceCarResponse maintain(@PathVariable int id){
-        return service.maintenance(id);
+    @GetMapping("/{id}-maintenances")
+    public List<GetAllMaintenanceResponse> getModels(@PathVariable int id) {
+        return service.showMaintenances(id);
     }
-
-    @PutMapping("/update-availability/{id}")
-    public UpdateAvailableCarResponse makeAvailable(@PathVariable int id){
-        return service.makeAvailable(id);
-    }
-
 }

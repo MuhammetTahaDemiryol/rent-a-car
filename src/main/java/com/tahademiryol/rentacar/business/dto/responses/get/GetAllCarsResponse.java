@@ -19,5 +19,6 @@ public class GetAllCarsResponse {
     @Enumerated(EnumType.STRING)
     private State state; //  Available, Rented,  Maintenance
     private double dailyPrice;
+    private int modelId;
 
 }

@@ -4,6 +4,7 @@ import com.tahademiryol.rentacar.business.abstracts.ModelService;
 import com.tahademiryol.rentacar.business.dto.requests.create.CreateModelRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateModelRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateModelResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.GetAllCarsResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.GetAllModelsResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.GetModelResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateModelResponse;
@@ -58,11 +59,17 @@ public class ModelManager implements ModelService {
     }
 
 
-
     @Override
     public void delete(int id) {
         checkIfBrandExists(id);
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<GetAllCarsResponse> showCars(int id) {
+        Model model = repository.findById(id).orElseThrow();
+        return model.getCars().stream()
+                .map(car -> mapper.map(car, GetAllCarsResponse.class)).toList();
     }
 
     // Business rules

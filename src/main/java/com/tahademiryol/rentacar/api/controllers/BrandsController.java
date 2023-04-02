@@ -5,6 +5,7 @@ import com.tahademiryol.rentacar.business.dto.requests.create.CreateBrandRequest
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateBrandRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateBrandResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.GetAllBrandsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.GetAllModelsResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.GetBrandResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateBrandResponse;
 import lombok.AllArgsConstructor;
@@ -45,4 +46,11 @@ public class BrandsController {
     public void delete(@PathVariable int id) {
         service.delete(id);
     }
+
+    @GetMapping("/{id}-models")
+    public List<GetAllModelsResponse> getModels(@PathVariable int id) {
+        return service.showModels(id);
+    }
+
+
 }
