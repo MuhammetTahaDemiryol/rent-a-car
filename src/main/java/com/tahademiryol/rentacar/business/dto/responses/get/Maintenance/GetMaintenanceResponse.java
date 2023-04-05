@@ -1,11 +1,11 @@
-package com.tahademiryol.rentacar.business.dto.responses.get;
+package com.tahademiryol.rentacar.business.dto.responses.get.Maintenance;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +13,9 @@ import java.sql.Timestamp;
 @Setter
 public class GetMaintenanceResponse {
     private int id;
-    private Timestamp sentDate;
-    private Timestamp returnDate;
     private int carId;
+    private String information;
+    private boolean isCompleted;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 }

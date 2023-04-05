@@ -4,9 +4,9 @@ import com.tahademiryol.rentacar.business.abstracts.ModelService;
 import com.tahademiryol.rentacar.business.dto.requests.create.CreateModelRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateModelRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateModelResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllCarsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllModelsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetModelResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Car.GetAllCarsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetAllModelsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetModelResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateModelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,7 +47,7 @@ public class ModelsController {
         service.delete(id);
     }
 
-    @GetMapping("/{id}-cars")
+    @GetMapping("/cars-of-{id}")
     public List<GetAllCarsResponse> getModels(@PathVariable int id) {
         return service.showCars(id);
     }

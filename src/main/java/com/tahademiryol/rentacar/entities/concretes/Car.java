@@ -22,9 +22,9 @@ public class Car {
     private int id;
     private int modelYear;
     private String plate;
+    private double dailyPrice;
     @Enumerated(EnumType.STRING)
     private State state; //  Available, Rented,  Maintenance
-    private double dailyPrice;
 
     @ManyToOne
     // @JsonManagedReference

@@ -4,9 +4,9 @@ import com.tahademiryol.rentacar.business.abstracts.ModelService;
 import com.tahademiryol.rentacar.business.dto.requests.create.CreateModelRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateModelRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateModelResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllCarsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllModelsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetModelResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Car.GetAllCarsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetAllModelsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetModelResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateModelResponse;
 import com.tahademiryol.rentacar.entities.concretes.Model;
 import com.tahademiryol.rentacar.repository.abstracts.ModelRepository;
@@ -35,7 +35,7 @@ public class ModelManager implements ModelService {
 
     @Override
     public GetModelResponse getById(int id) {
-        checkIfBrandExists(id);
+        checkIfModelExists(id);
         Model model = repository.findById(id).orElseThrow();
         return mapper.map(model, GetModelResponse.class);
     }
@@ -50,18 +50,18 @@ public class ModelManager implements ModelService {
 
     @Override
     public UpdateModelResponse update(int id, UpdateModelRequest request) {
-        checkIfBrandExists(id);
-
-        Model model = repository.findById(id).orElseThrow();
-        model.setName(request.getName());
+        checkIfModelExists(id);
+        Model model =  mapper.map(request, Model.class);
+        model.setId(id);
         repository.save(model);
         return mapper.map(model, UpdateModelResponse.class);
+
     }
 
 
     @Override
     public void delete(int id) {
-        checkIfBrandExists(id);
+        checkIfModelExists(id);
         repository.deleteById(id);
     }
 
@@ -74,7 +74,7 @@ public class ModelManager implements ModelService {
 
     // Business rules
 
-    private void checkIfBrandExists(int id) {
-        if (!repository.existsById(id)) throw new RuntimeException("No such a brand!");
+    private void checkIfModelExists(int id) {
+        if (!repository.existsById(id)) throw new RuntimeException("No such a Model!");
     }
 }

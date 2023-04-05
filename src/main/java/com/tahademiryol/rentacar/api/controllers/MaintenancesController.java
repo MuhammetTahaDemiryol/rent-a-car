@@ -5,8 +5,8 @@ import com.tahademiryol.rentacar.business.abstracts.MaintenanceService;
 import com.tahademiryol.rentacar.business.dto.requests.create.CreateMaintenanceRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateMaintenanceRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateMaintenanceResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllMaintenanceResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetMaintenanceResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Maintenance.GetAllMaintenanceResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Maintenance.GetMaintenanceResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateMaintenanceResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,24 +16,29 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/maintenance")
+@RequestMapping("/api/maintenances")
 public class MaintenancesController {
     private final MaintenanceService service;
 
-    @GetMapping("/")
+    @GetMapping
     public List<GetAllMaintenanceResponse> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
     public GetMaintenanceResponse getById(@PathVariable int id) {
-        return service.get(id);
+        return service.getById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreateMaintenanceResponse add(@RequestBody CreateMaintenanceRequest request) {
         return service.add(request);
+    }
+
+    @PutMapping("/return/{carId}")
+    public GetMaintenanceResponse returnCarFromMaintenance(@PathVariable int carId) {
+        return service.returnCarFromMaintenance(carId);
     }
 
     @PutMapping("/{id}")

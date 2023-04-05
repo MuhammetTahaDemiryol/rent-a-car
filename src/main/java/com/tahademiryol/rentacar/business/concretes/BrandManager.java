@@ -4,9 +4,9 @@ import com.tahademiryol.rentacar.business.abstracts.BrandService;
 import com.tahademiryol.rentacar.business.dto.requests.create.CreateBrandRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateBrandRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateBrandResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllBrandsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllModelsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetBrandResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Brand.GetAllBrandsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Brand.GetBrandResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetAllModelsResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateBrandResponse;
 import com.tahademiryol.rentacar.entities.concretes.Brand;
 import com.tahademiryol.rentacar.repository.abstracts.BrandRepository;
@@ -50,16 +50,15 @@ public class BrandManager implements BrandService {
 //        return response;
         Brand brand = mapper.map(request, Brand.class);
         brand.setId(0);
-        Brand createdBrand = repository.save(brand);
-        return mapper.map(createdBrand, CreateBrandResponse.class);
+        repository.save(brand);
+        return mapper.map(brand, CreateBrandResponse.class);
     }
 
     @Override
     public UpdateBrandResponse update(int id, UpdateBrandRequest request) {
         checkIfBrandExists(id);
-
-        Brand brand = repository.findById(id).orElseThrow();
-        brand.setName(request.getName());
+        Brand brand = mapper.map(request, Brand.class);
+        brand.setId(id);
         repository.save(brand);
         return mapper.map(brand, UpdateBrandResponse.class);
     }
@@ -70,15 +69,14 @@ public class BrandManager implements BrandService {
         repository.deleteById(id);
     }
 
+    // Business rules
+    private void checkIfBrandExists(int id) {
+        if (!repository.existsById(id)) throw new RuntimeException("No such a brand!");
+    }
+
     @Override
     public List<GetAllModelsResponse> showModels(int id) {
         Brand brand = repository.findById(id).orElseThrow();
         return brand.getModels().stream().map(model -> mapper.map(model, GetAllModelsResponse.class)).toList();
-    }
-
-    // Business rules
-
-    private void checkIfBrandExists(int id) {
-        if (!repository.existsById(id)) throw new RuntimeException("No such a brand!");
     }
 }

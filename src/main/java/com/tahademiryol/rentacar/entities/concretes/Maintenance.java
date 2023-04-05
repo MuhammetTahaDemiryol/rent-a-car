@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Setter
@@ -21,14 +20,13 @@ public class Maintenance {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-        @Column(updatable = false)
-        @CreationTimestamp
-        private Timestamp sentDate;
-
-        @UpdateTimestamp
-        private Timestamp returnDate;
+        private String information;
+        private boolean isCompleted;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
 
         @ManyToOne
+        @JoinColumn(name = "car_id")
         private Car car;
 
 

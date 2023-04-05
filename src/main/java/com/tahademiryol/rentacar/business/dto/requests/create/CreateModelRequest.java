@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateModelRequest {
-    private String name;
     private int brandId;
+    private String name;
 }

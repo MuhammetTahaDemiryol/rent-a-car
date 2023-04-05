@@ -4,9 +4,9 @@ import com.tahademiryol.rentacar.business.abstracts.BrandService;
 import com.tahademiryol.rentacar.business.dto.requests.create.CreateBrandRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateBrandRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateBrandResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllBrandsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllModelsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetBrandResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Brand.GetAllBrandsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetAllModelsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Brand.GetBrandResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateBrandResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,7 +47,7 @@ public class BrandsController {
         service.delete(id);
     }
 
-    @GetMapping("/{id}-models")
+    @GetMapping("/models-of-{id}")
     public List<GetAllModelsResponse> getModels(@PathVariable int id) {
         return service.showModels(id);
     }

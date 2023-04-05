@@ -4,9 +4,9 @@ import com.tahademiryol.rentacar.business.abstracts.CarService;
 import com.tahademiryol.rentacar.business.dto.requests.create.CreateCarRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateCarRequest;
 import com.tahademiryol.rentacar.business.dto.responses.create.CreateCarResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllCarsResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetAllMaintenanceResponse;
-import com.tahademiryol.rentacar.business.dto.responses.get.GetCarResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Car.GetAllCarsResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Maintenance.GetAllMaintenanceResponse;
+import com.tahademiryol.rentacar.business.dto.responses.get.Car.GetCarResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateCarResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,18 +21,13 @@ public class CarsController {
     private final CarService service;
 
     @GetMapping
-    public List<GetAllCarsResponse> getAll() {
-        return service.getAll();
-    }
-
-    @GetMapping("/get/{state}")
-    public List<GetAllCarsResponse> getAllByState(@PathVariable String state) {
-        return service.getAllByState(state);
+    public List<GetAllCarsResponse> getAll(@RequestParam(defaultValue = "false") boolean includeMaintenance) {
+        return service.getAll(includeMaintenance);
     }
 
     @GetMapping("/{id}")
     public GetCarResponse getById(@PathVariable int id) {
-        return service.get(id);
+        return service.getById(id);
     }
 
     @PostMapping
@@ -52,7 +47,7 @@ public class CarsController {
         service.delete(id);
     }
 
-    @GetMapping("/{id}-maintenances")
+    @GetMapping("/maintenances-of-{id}")
     public List<GetAllMaintenanceResponse> getModels(@PathVariable int id) {
         return service.showMaintenances(id);
     }

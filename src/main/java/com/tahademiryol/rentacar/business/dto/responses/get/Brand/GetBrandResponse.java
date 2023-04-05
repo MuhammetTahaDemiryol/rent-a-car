@@ -1,4 +1,4 @@
-package com.tahademiryol.rentacar.business.dto.responses.get;
+package com.tahademiryol.rentacar.business.dto.responses.get.Brand;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

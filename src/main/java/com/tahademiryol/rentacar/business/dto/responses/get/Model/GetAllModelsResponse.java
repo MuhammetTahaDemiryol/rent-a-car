@@ -1,4 +1,4 @@
-package com.tahademiryol.rentacar.business.dto.responses.get;
+package com.tahademiryol.rentacar.business.dto.responses.get.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class GetAllModelsResponse {
     private int id;
-    private String name;
     private int brandId;
+    private String name;
 
 }
