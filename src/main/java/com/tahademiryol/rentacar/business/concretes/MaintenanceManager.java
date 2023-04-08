@@ -82,6 +82,7 @@ public class MaintenanceManager implements MaintenanceService {
     @Override
     public void delete(int id) {
         checkIfMaintenanceExist(id);
+        makeCarAvailableIfIsCompletedFalse(id);
         repository.deleteById(id);
 
     }
@@ -97,6 +98,7 @@ public class MaintenanceManager implements MaintenanceService {
         if (repository.existsByCarIdAndIsCompletedFalse(carId)) {
             throw new RuntimeException("Car is already in maintenance!");
         }
+
     }
 
     private void checkIfCarIsNotUnderMaintenance(int carId) {
@@ -109,6 +111,12 @@ public class MaintenanceManager implements MaintenanceService {
         if (carService.getById(carId).getState().equals(State.RENTED)) {
             throw new RuntimeException("Car is rented, can not be sent to maintenance!");
         }
+    }
+
+    private void makeCarAvailableIfIsCompletedFalse(int id){
+        int carId = repository.findById(id).get().getCar().getId();
+        if(repository.existsByCarIdAndIsCompletedFalse(carId))
+            carService.changeState(carId, State.AVAILABLE);
     }
 }
 
