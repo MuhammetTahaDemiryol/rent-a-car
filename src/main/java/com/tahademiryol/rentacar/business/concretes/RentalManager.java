@@ -1,6 +1,7 @@
 package com.tahademiryol.rentacar.business.concretes;
 
 import com.tahademiryol.rentacar.business.abstracts.CarService;
+import com.tahademiryol.rentacar.business.abstracts.PaymentService;
 import com.tahademiryol.rentacar.business.abstracts.RentalService;
 import com.tahademiryol.rentacar.business.dto.requests.create.CreateRentalRequest;
 import com.tahademiryol.rentacar.business.dto.requests.update.UpdateRentalRequest;
@@ -8,6 +9,7 @@ import com.tahademiryol.rentacar.business.dto.responses.create.CreateRentalRespo
 import com.tahademiryol.rentacar.business.dto.responses.get.Rental.GetAllRentalsResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.Rental.GetRentalResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateRentalResponse;
+import com.tahademiryol.rentacar.common.dto.CreateRentalPaymentRequest;
 import com.tahademiryol.rentacar.entities.concretes.Rental;
 import com.tahademiryol.rentacar.entities.enums.State;
 import com.tahademiryol.rentacar.repository.abstracts.RentalRepository;
@@ -24,6 +26,7 @@ public class RentalManager implements RentalService {
     private final RentalRepository repository;
     private final ModelMapper mapper;
     private final CarService carService;
+    private final PaymentService paymentService;
 
     @Override
     public List<GetAllRentalsResponse> getAll() {
@@ -49,6 +52,12 @@ public class RentalManager implements RentalService {
         rental.setId(0);
         rental.setTotalPrice(getTotalPrice(rental));
         rental.setStartDate(LocalDateTime.now());
+
+        CreateRentalPaymentRequest paymentRequest = new CreateRentalPaymentRequest();
+        mapper.map(request.getPaymentRequest(), paymentRequest);
+        paymentRequest.setPrice(getTotalPrice(rental));
+        paymentService.processRentalPayment(paymentRequest);
+
         repository.save(rental);
         carService.changeState(rental.getCar().getId() , State.RENTED);
         return mapper.map(rental, CreateRentalResponse.class);
