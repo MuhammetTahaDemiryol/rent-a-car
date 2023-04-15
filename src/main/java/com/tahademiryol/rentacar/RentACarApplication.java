@@ -10,5 +10,10 @@ public class RentACarApplication {
 		SpringApplication.run(RentACarApplication.class, args);
 	}
 
+//	ApplicationContext apc = SpringApplication.run(RentACarApplication.class, args);
+//        for (String s : apc.getBeanDefinitionNames()) {
+//		System.out.println(s);
+//	}
+
 
 }

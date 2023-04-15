@@ -9,28 +9,26 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
-@Table(name = "rentals")
-public class Rental {
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "invoices")
+public class Invoice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private int rentedForDays;
+    private String cardHolder;
+    private String modelName;
+    private String brandName;
+    private String plate;
+    private int modelYear;
     private double dailyPrice;
-    private double totalPrice; //read-only
-    private LocalDateTime startDate;
+    private double totalPrice;
+    private int rentedForDays;
+    private LocalDateTime rentedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
-
-    @OneToOne(mappedBy = "rental")
-    private Invoice invoice;
-
-
-
+    @OneToOne
+    private Rental rental;
 }
