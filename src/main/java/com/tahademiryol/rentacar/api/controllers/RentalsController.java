@@ -37,13 +37,13 @@ public class RentalsController {
     }
 
     @PutMapping("/{id}")
-    public UpdateRentalResponse update(@PathVariable int id, @RequestBody UpdateRentalRequest request){
+    public UpdateRentalResponse update(@PathVariable int id, @RequestBody UpdateRentalRequest request) {
         return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         service.delete(id);
     }
 }

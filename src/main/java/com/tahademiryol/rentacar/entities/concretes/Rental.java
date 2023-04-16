@@ -28,9 +28,5 @@ public class Rental {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToOne(mappedBy = "rental")
-    private Invoice invoice;
-
-
 
 }

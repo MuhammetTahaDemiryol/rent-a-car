@@ -8,6 +8,7 @@ import com.tahademiryol.rentacar.business.dto.responses.get.Brand.GetAllBrandsRe
 import com.tahademiryol.rentacar.business.dto.responses.get.Brand.GetBrandResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetAllModelsResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateBrandResponse;
+import com.tahademiryol.rentacar.business.rules.BrandBusinessRules;
 import com.tahademiryol.rentacar.entities.concretes.Brand;
 import com.tahademiryol.rentacar.repository.abstracts.BrandRepository;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 public class BrandManager implements BrandService {
     private final BrandRepository repository;
     private final ModelMapper mapper;
+    private final BrandBusinessRules rules;
 
     @Override
     public List<GetAllBrandsResponse> getAll() {
@@ -32,7 +34,7 @@ public class BrandManager implements BrandService {
 
     @Override
     public GetBrandResponse getById(int id) {
-        checkIfBrandExists(id);
+        rules.checkIfBrandExists(id);
         Brand brand = repository.findById(id).orElseThrow();
         return mapper.map(brand, GetBrandResponse.class);
     }
@@ -56,7 +58,7 @@ public class BrandManager implements BrandService {
 
     @Override
     public UpdateBrandResponse update(int id, UpdateBrandRequest request) {
-        checkIfBrandExists(id);
+        rules.checkIfBrandExists(id);
         Brand brand = mapper.map(request, Brand.class);
         brand.setId(id);
         repository.save(brand);
@@ -65,14 +67,10 @@ public class BrandManager implements BrandService {
 
     @Override
     public void delete(int id) {
-        checkIfBrandExists(id);
+        rules.checkIfBrandExists(id);
         repository.deleteById(id);
     }
 
-    // Business rules
-    private void checkIfBrandExists(int id) {
-        if (!repository.existsById(id)) throw new RuntimeException("No such a brand!");
-    }
 
     @Override
     public List<GetAllModelsResponse> showModels(int id) {

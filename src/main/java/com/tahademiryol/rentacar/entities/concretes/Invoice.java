@@ -29,6 +29,4 @@ public class Invoice {
     private int rentedForDays;
     private LocalDateTime rentedAt;
 
-    @OneToOne
-    private Rental rental;
 }

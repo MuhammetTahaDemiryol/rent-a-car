@@ -8,6 +8,7 @@ import com.tahademiryol.rentacar.business.dto.responses.get.Car.GetAllCarsRespon
 import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetAllModelsResponse;
 import com.tahademiryol.rentacar.business.dto.responses.get.Model.GetModelResponse;
 import com.tahademiryol.rentacar.business.dto.responses.update.UpdateModelResponse;
+import com.tahademiryol.rentacar.business.rules.ModelBusinessRules;
 import com.tahademiryol.rentacar.entities.concretes.Model;
 import com.tahademiryol.rentacar.repository.abstracts.ModelRepository;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ModelManager implements ModelService {
     private final ModelRepository repository;
     private final ModelMapper mapper;
+    private final ModelBusinessRules rules;
 
     @Override
     public List<GetAllModelsResponse> getAll() {
@@ -35,7 +37,7 @@ public class ModelManager implements ModelService {
 
     @Override
     public GetModelResponse getById(int id) {
-        checkIfModelExists(id);
+        rules.checkIfModelExists(id);
         Model model = repository.findById(id).orElseThrow();
         return mapper.map(model, GetModelResponse.class);
     }
@@ -50,8 +52,8 @@ public class ModelManager implements ModelService {
 
     @Override
     public UpdateModelResponse update(int id, UpdateModelRequest request) {
-        checkIfModelExists(id);
-        Model model =  mapper.map(request, Model.class);
+        rules.checkIfModelExists(id);
+        Model model = mapper.map(request, Model.class);
         model.setId(id);
         repository.save(model);
         return mapper.map(model, UpdateModelResponse.class);
@@ -61,7 +63,7 @@ public class ModelManager implements ModelService {
 
     @Override
     public void delete(int id) {
-        checkIfModelExists(id);
+        rules.checkIfModelExists(id);
         repository.deleteById(id);
     }
 
@@ -72,9 +74,5 @@ public class ModelManager implements ModelService {
                 .map(car -> mapper.map(car, GetAllCarsResponse.class)).toList();
     }
 
-    // Business rules
 
-    private void checkIfModelExists(int id) {
-        if (!repository.existsById(id)) throw new RuntimeException("No such a Model!");
-    }
 }

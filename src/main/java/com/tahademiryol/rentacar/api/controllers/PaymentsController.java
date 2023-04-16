@@ -20,12 +20,12 @@ public class PaymentsController {
     private final PaymentService service;
 
     @GetMapping
-    public List<GetAllPaymentsResponse> getAll(){
+    public List<GetAllPaymentsResponse> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public GetPaymentResponse getById(@PathVariable int id){
+    public GetPaymentResponse getById(@PathVariable int id) {
         return service.getById(id);
     }
 
@@ -35,7 +35,7 @@ public class PaymentsController {
     }
 
     @PutMapping("/{id}")
-    public UpdatePaymentResponse update( @PathVariable int id, @Valid @RequestBody UpdatePaymentRequest request) {
+    public UpdatePaymentResponse update(@PathVariable int id, @Valid @RequestBody UpdatePaymentRequest request) {
         return service.update(id, request);
     }
 
