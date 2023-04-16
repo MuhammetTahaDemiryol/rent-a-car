@@ -1,6 +1,8 @@
 package com.tahademiryol.rentacar.adapters;
 
 import com.tahademiryol.rentacar.business.abstracts.PosService;
+import com.tahademiryol.rentacar.common.constants.Messages;
+import com.tahademiryol.rentacar.core.exceptions.BusinessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -11,6 +13,6 @@ public class FakePosServiceAdapter implements PosService {
     public void pay() {
         boolean isPaymentSuccessful = new Random().nextBoolean();
         if (!isPaymentSuccessful)
-            throw new RuntimeException("Payment is unsuccessful!");
+            throw new BusinessException(Messages.Payment.Failed);
     }
 }

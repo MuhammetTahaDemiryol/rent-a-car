@@ -1,5 +1,7 @@
 package com.tahademiryol.rentacar.business.rules;
 
+import com.tahademiryol.rentacar.common.constants.Messages;
+import com.tahademiryol.rentacar.core.exceptions.BusinessException;
 import com.tahademiryol.rentacar.repository.abstracts.InvoiceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,6 @@ public class InvoiceBusinessRules {
 
     // Business rules
     public void checkIfInvoiceExist(int id) {
-        if (!repository.existsById(id)) throw new RuntimeException("Invoice Id does not exist!");
+        if (!repository.existsById(id)) throw new BusinessException(Messages.Invoice.NotFound);
     }
 }

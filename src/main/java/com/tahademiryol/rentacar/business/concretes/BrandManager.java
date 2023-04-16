@@ -41,6 +41,7 @@ public class BrandManager implements BrandService {
 
     @Override
     public CreateBrandResponse add(CreateBrandRequest request) {
+        rules.checkIfBrandExistsByName(request.getName());
 //        Brand brand = new Brand();
 //        brand.setName(request.getName());
 //        repository.save(brand);

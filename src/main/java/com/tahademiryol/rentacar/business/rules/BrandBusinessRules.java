@@ -1,5 +1,7 @@
 package com.tahademiryol.rentacar.business.rules;
 
+import com.tahademiryol.rentacar.common.constants.Messages;
+import com.tahademiryol.rentacar.core.exceptions.BusinessException;
 import com.tahademiryol.rentacar.repository.abstracts.BrandRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,10 @@ public class BrandBusinessRules {
 
     // Business rules
     public void checkIfBrandExists(int id) {
-        if (!repository.existsById(id)) throw new RuntimeException("No such a brand!");
+        if (!repository.existsById(id)) throw new BusinessException(Messages.Brand.NotExists);
+    }
+
+    public void checkIfBrandExistsByName(String name) {
+        if (repository.existsByNameIgnoreCase(name)) throw new BusinessException(Messages.Brand.Exists);
     }
 }

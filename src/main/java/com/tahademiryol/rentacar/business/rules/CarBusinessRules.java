@@ -1,5 +1,7 @@
 package com.tahademiryol.rentacar.business.rules;
 
+import com.tahademiryol.rentacar.common.constants.Messages;
+import com.tahademiryol.rentacar.core.exceptions.BusinessException;
 import com.tahademiryol.rentacar.repository.abstracts.CarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,6 @@ public class CarBusinessRules {
 
     // Business rules
     public void checkIfCarExists(int id) {
-        if (!repository.existsById(id)) throw new RuntimeException("No such a car!");
+        if (!repository.existsById(id)) throw new BusinessException(Messages.Car.NotExists);
     }
 }

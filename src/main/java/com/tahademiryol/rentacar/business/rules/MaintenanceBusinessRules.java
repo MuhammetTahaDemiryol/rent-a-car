@@ -1,5 +1,7 @@
 package com.tahademiryol.rentacar.business.rules;
 
+import com.tahademiryol.rentacar.common.constants.Messages;
+import com.tahademiryol.rentacar.core.exceptions.BusinessException;
 import com.tahademiryol.rentacar.entities.enums.State;
 import com.tahademiryol.rentacar.repository.abstracts.MaintenanceRepository;
 import lombok.AllArgsConstructor;
@@ -12,26 +14,26 @@ public class MaintenanceBusinessRules {
     // Business rules
 
     public void checkIfMaintenanceExist(int id) {
-        if (!repository.existsById(id)) throw new RuntimeException("Maintenance Id does not exist!");
+        if (!repository.existsById(id)) throw new BusinessException(Messages.Maintenance.NotExists);
     }
 
 
     public void checkIfCarUnderMaintenance(int carId) {
         if (repository.existsByCarIdAndIsCompletedFalse(carId)) {
-            throw new RuntimeException("Car is already in maintenance!");
+            throw new BusinessException(Messages.Maintenance.CarExists);
         }
 
     }
 
     public void checkIfCarIsNotUnderMaintenance(int carId) {
         if (!repository.existsByCarIdAndIsCompletedFalse(carId)) {
-            throw new RuntimeException("No such a car in maintenance!");
+            throw new BusinessException(Messages.Maintenance.CarNotExists);
         }
     }
 
     public void checkCarAvailabilityForMaintenance(State state) {
         if (state.equals(State.RENTED)) {
-            throw new RuntimeException("Car is rented, can not be sent to maintenance!");
+            throw new BusinessException(Messages.Maintenance.CarIsRented);
         }
     }
 }

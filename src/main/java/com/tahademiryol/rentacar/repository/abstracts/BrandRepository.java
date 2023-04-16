@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BrandRepository extends JpaRepository<Brand, Integer> {
 
     //custom queries
+    boolean existsByNameIgnoreCase(String name);
 }
