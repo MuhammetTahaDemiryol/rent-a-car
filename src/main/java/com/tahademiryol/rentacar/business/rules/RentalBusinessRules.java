@@ -17,7 +17,7 @@ public class RentalBusinessRules {
     }
 
     public void checkIfCarAvailable(State state) {
-        if (state.equals(State.AVAILABLE)) {
+        if (!state.equals(State.AVAILABLE)) {
             throw new RuntimeException("The car is not available!");
         }
 

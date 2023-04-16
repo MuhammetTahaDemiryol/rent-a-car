@@ -66,7 +66,7 @@ public class PaymentManager implements PaymentService {
     public void processRentalPayment(CreateRentalPaymentRequest request) {
         rules.checkIfPaymentIsValid(request);
         Payment payment = repository.findByCardNumber(request.getCardNumber());
-        rules.checkIfBalanceIsEnough(payment.getBalance(), request.getPrice());
+        rules.checkIfBalanceIsEnough(request.getPrice(), payment.getBalance());
         //fake pos service
         fakePosServiceAdapter.pay();
         payment.setBalance(payment.getBalance() - request.getPrice());
