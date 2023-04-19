@@ -7,19 +7,14 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-public class ExceptionResult<T extends Exception> {
+public class ExceptionResult<T> {
     private LocalDateTime timestamp;
     private String type;
-    private String message;
+    private T message;
 
-    public ExceptionResult(Class<T> type, String message) {
+    public ExceptionResult(String type, T message) {
         this.timestamp = LocalDateTime.now();
-        this.type = type.getSimpleName();
+        this.type = type;
         this.message = message;
     }
-
-    private String convertToUpperCaseWithUnderscores(String camelCaseString) {
-        return camelCaseString.replaceAll("(.)(\\p{Upper})", "$1_$2").toUpperCase();
-    }
-
 }
