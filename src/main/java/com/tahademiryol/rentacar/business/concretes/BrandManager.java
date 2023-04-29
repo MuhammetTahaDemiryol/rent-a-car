@@ -13,6 +13,8 @@ import com.tahademiryol.rentacar.entities.concretes.Brand;
 import com.tahademiryol.rentacar.repository.abstracts.BrandRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class BrandManager implements BrandService {
     private final BrandBusinessRules rules;
 
     @Override
+    @Cacheable(value = "brand_list")
     public List<GetAllBrandsResponse> getAll() {
         List<Brand> brands = repository.findAll();
 
@@ -40,17 +43,18 @@ public class BrandManager implements BrandService {
     }
 
     @Override
+    @CacheEvict(value = "brand_list", allEntries = true)
     public CreateBrandResponse add(CreateBrandRequest request) {
         rules.checkIfBrandExistsByName(request.getName());
 //        Brand brand = new Brand();
-//        brand.setName(request.getName());
+//        brand.setName(requests.getName());
 //        repository.save(brand);
 //
-//        CreateBrandResponse response = new CreateBrandResponse();
-//        response.setId(brand.getId());
-//        response.setName(brand.getName());
+//        CreateBrandResponse responses = new CreateBrandResponse();
+//        responses.setId(brand.getId());
+//        responses.setName(brand.getName());
 //
-//        return response;
+//        return responses;
         Brand brand = mapper.map(request, Brand.class);
         brand.setId(0);
         repository.save(brand);
